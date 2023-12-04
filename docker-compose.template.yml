@@ -61,7 +61,7 @@ services:
       KONG_DATABASE: "off" # Use 'off' for DB-less mode
       KONG_DECLARATIVE_CONFIG: "/etc/kong/kong.yml"
     volumes:
-      - ./kong.yml:/etc/kong/kong.yml # Mount the kong.yml file
+      - ./proxy/kong.yml:/etc/kong/kong.yml # Mount the kong.yml file
     ports:
       - "80:8000" # HTTP traffic
       - "8443:8443" # HTTPS traffic
