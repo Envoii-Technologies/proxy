@@ -44,12 +44,12 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_HTTP_RELATIVE_PATH: /auth
       PROXY_ADDRESS_FORWARDING: true
-      KEYCLOAK_FRONTEND_URL: http://localhost/auth/
+      KEYCLOAK_FRONTEND_URL: http://host.docker.internal/auth/
     restart: unless-stopped
     depends_on:
       - postgres
     ports:
-      - "28080:8080"
+      - "8080:8080"
     networks:
       - local-envoii
 
@@ -61,12 +61,14 @@ services:
       KONG_DATABASE: "off" # Use 'off' for DB-less mode
       KONG_DECLARATIVE_CONFIG: "/etc/kong/kong.yml"
     volumes:
-      - ./proxy/kong.yml:/etc/kong/kong.yml # Mount the kong.yml file
+      - ./kong.yml:/etc/kong/kong.yml # Mount the kong.yml file
     ports:
-      - "8000:8000" # HTTP traffic
+      - "80:8000" # HTTP traffic
       - "8443:8443" # HTTPS traffic
       - "8001:8001" # Admin API (non-SSL)
       - "8444:8444" # Admin API (SSL)
+    networks:
+      - local-envoii
 
   # React frontend
   frontend:
@@ -88,7 +90,7 @@ services:
     container_name: migration
     restart: on-failure
     environment:
-      KEYCLOAK_URL: http://host.docker.internal/auth
+      KEYCLOAK_URL: http://host.docker.internal:8080/auth
       KEYCLOAK_ADMIN_USERNAME: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       MAX_RETRIES: 10
