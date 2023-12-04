@@ -1,0 +1,234 @@
+version: '3.9'
+
+services:
+
+  # PostgreSQL service
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - local-envoii
+
+  # documentation service
+  docs:
+    container_name: docs
+    image: ghcr.io/envoii-technologies/documentation-service:latest-develop
+    ports:
+      - "3400:3400"
+    volumes:
+      - "/app/node_modules"
+      - "./:/app"
+    networks:
+      - local-envoii
+
+  # Auth service (Keycloak)
+  auth:
+    # image: quay.io/keycloak/keycloak:latest
+    image: ghcr.io/envoii-technologies/auth-service:latest-develop
+    container_name: auth
+    command:
+      - start-dev
+    environment:
+      DB_VENDOR: postgres
+      DB_ADDR: postgres
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: password
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HTTP_RELATIVE_PATH: /auth
+      PROXY_ADDRESS_FORWARDING: true
+      KEYCLOAK_FRONTEND_URL: http://localhost/auth/
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    ports:
+      - "28080:8080"
+    networks:
+      - local-envoii
+
+  # Backwards proxy
+  kong:
+    image: kong:latest
+    container_name: kong
+    environment:
+      KONG_DATABASE: "off" # Use 'off' for DB-less mode
+      KONG_DECLARATIVE_CONFIG: "/etc/kong/kong.yml"
+    volumes:
+      - ./proxy/kong.yml:/etc/kong/kong.yml # Mount the kong.yml file
+    ports:
+      - "8000:8000" # HTTP traffic
+      - "8443:8443" # HTTPS traffic
+      - "8001:8001" # Admin API (non-SSL)
+      - "8444:8444" # Admin API (SSL)
+
+  # React frontend
+  frontend:
+    container_name: frontend
+    stdin_open: true
+    image: ghcr.io/envoii-technologies/frontend-service:latest-develop
+    ports:
+      - 3000
+      - 3101
+    volumes:
+      - "/app/node_modules"
+      - "./:/app"
+    networks:
+      - local-envoii
+
+  # migration service
+  migration:
+    image: ghcr.io/envoii-technologies/migration-service:latest-develop
+    container_name: migration
+    restart: on-failure
+    environment:
+      KEYCLOAK_URL: http://host.docker.internal/auth
+      KEYCLOAK_ADMIN_USERNAME: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      MAX_RETRIES: 10
+    volumes:
+      - "/app/node_modules"
+      - "./:/app"
+    depends_on:
+      - auth
+      - tenant
+      - user
+    networks:
+      - local-envoii
+
+  # tenant service
+  tenant:
+    image: ghcr.io/envoii-technologies/tenant-service:latest-develop
+    container_name: tenant
+    restart: on-failure
+    ports:
+      - "4000:4000"
+    environment:
+      KEYCLOAK_URL: http://host.docker.internal/auth
+      SERVICE_NAME: tenant-service
+      SERVICE_PORT: 4000
+    volumes:
+      - "/app/node_modules"
+      - "./:/app"
+    depends_on:
+      - auth
+      - mongodb
+    networks:
+      - local-envoii
+
+  # user service
+  user:
+    image: ghcr.io/envoii-technologies/user-service:latest-develop
+    container_name: user
+    restart: on-failure
+    ports:
+      - "4001:4001"
+    environment:
+      KEYCLOAK_URL: http://host.docker.internal/auth
+      SERVICE_NAME: user-service
+      SERVICE_PORT: 4001
+    volumes:
+      - "/app/node_modules"
+      - "./:/app"
+    depends_on:
+      - auth
+      - mongodb
+    networks:
+      - local-envoii
+
+  # card service
+  card:
+    image: ghcr.io/envoii-technologies/card-service:latest-develop
+    container_name: card
+    restart: on-failure
+    ports:
+      - "4002:4002"
+    environment:
+      KEYCLOAK_URL: http://host.docker.internal/auth
+      SERVICE_NAME: card-service
+      SERVICE_PORT: 4002
+    volumes:
+      - "/app/node_modules"
+      - "./:/app"
+    depends_on:
+      - auth
+      - mongodb
+    networks:
+      - local-envoii
+
+  # tag service
+  tag:
+    image: ghcr.io/envoii-technologies/tag-service:latest-develop
+    container_name: tag
+    restart: on-failure
+    ports:
+      - "4003:4003"
+    environment:
+      KEYCLOAK_URL: http://host.docker.internal/auth
+      SERVICE_NAME: tag-service
+      SERVICE_PORT: 4003
+    volumes:
+      - "/app/node_modules"
+      - "./:/app"
+    depends_on:
+      - auth
+      - mongodb
+    networks:
+      - local-envoii
+
+  # media service
+  media:
+    image: ghcr.io/envoii-technologies/media-service:latest-develop
+    container_name: media
+    restart: on-failure
+    ports:
+      - "4004:4004"
+    environment:
+      NODE_ENV: development
+      KEYCLOAK_URL: http://host.docker.internal/auth
+      SERVICE_NAME: media-service
+      SERVICE_PORT: 4004
+    depends_on:
+      - auth
+      - mongodb
+    networks:
+      - local-envoii
+
+  # MongoDB service
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - local-envoii
+
+  # database check
+  mongo-express:
+    container_name: mongo-express
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongodb/
+    networks:
+      - local-envoii
+
+volumes:
+  postgres-data:
+  mongodb-data:
+
+
+networks:
+  local-envoii:
+    # external: true
+    driver: bridge
