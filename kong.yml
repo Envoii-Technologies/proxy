@@ -1,0 +1,72 @@
+services:
+  - name: auth-service
+    url: http://auth:8080
+    routes:
+      - name: auth-route
+        paths:
+          - /auth
+
+  - name: tenant-service
+    url: http://tenant:4000
+    routes:
+      - name: tenant-route
+        paths:
+          - /api/tenant
+
+  - name: user-service
+    url: http://user:4001
+    routes:
+      - name: user-route
+        paths:
+          - /api/tenant/[0-9a-z]+/users
+
+  - name: card-service
+    url: http://card:4002
+    routes:
+      - name: card-route
+        paths:
+          - /api/tenant/[0-9a-z]+/cards
+
+  - name: tag-service
+    url: http://tag:4003
+    routes:
+      - name: tag-route
+        paths:
+          - /api/tenant/[0-9a-z]+/tags
+
+  - name: media-service
+    url: http://media:4004
+    routes:
+      - name: media-route
+        paths:
+          - /api/tenant/[0-9a-z]+/media
+
+  - name: docs-service
+    url: http://docs:3400
+    routes:
+      - name: docs-route
+        paths:
+          - /docs
+
+  - name: ui-service
+    url: http://frontend:3000
+    routes:
+      - name: ui-route
+        paths:
+          - /
+
+  - name: hmr-service
+    url: http://frontend:3001
+    routes:
+      - name: hmr-route
+        paths:
+          - /
+        protocols:
+          - http
+        strip_path: false
+
+plugins:
+  - name: ip-restriction
+    config:
+      allow:
+        - 127.0.0.1/32
