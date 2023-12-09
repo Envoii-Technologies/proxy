@@ -65,15 +65,15 @@ services:
           - /
         strip_path: false
 
-  - name: hmr-service
-    url: http://host.docker.internal:3001
-    routes:
-      - name: hmr-route
-        paths:
-          - /
-        protocols:
-          - http
-        strip_path: false
+  # - name: hmr-service
+  #   url: http://host.docker.internal:3001
+  #   routes:
+  #     - name: hmr-route
+  #       paths:
+  #         - /
+  #       protocols:
+  #         - http
+  #       strip_path: false
 
 # plugins:
 #   - name: ip-restriction
