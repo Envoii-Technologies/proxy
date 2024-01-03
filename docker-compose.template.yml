@@ -199,6 +199,24 @@ services:
     networks:
       - local-envoii
 
+  # category service
+  category:
+    image: ghcr.io/envoii-technologies/category-service:latest-develop
+    container_name: category
+    restart: on-failure
+    ports:
+      - "4005:4005"
+    environment:
+      NODE_ENV: development
+      KEYCLOAK_URL: http://host.docker.internal/auth
+      SERVICE_NAME: category-service
+      SERVICE_PORT: 4005
+    depends_on:
+      - auth
+      - mongodb
+    networks:
+      - local-envoii
+
   # MongoDB service
   mongodb:
     image: mongo:latest
