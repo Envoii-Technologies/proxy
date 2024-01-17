@@ -112,6 +112,7 @@ services:
       KEYCLOAK_URL: http://host.docker.internal/auth
       SERVICE_NAME: tenant-service
       SERVICE_PORT: 4000
+      ROOT_URL: http://host.docker.internal
     volumes:
       - "/app/node_modules"
       - "./:/app"
