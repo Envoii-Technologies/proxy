@@ -114,6 +114,7 @@ services:
       SERVICE_NAME: tenant-service
       SERVICE_PORT: 4000
       ROOT_URL: http://host.docker.internal
+      MONGODB_URL: mongodb://mongodb/
     volumes:
       - "/app/node_modules"
       - "./:/app"
