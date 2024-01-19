@@ -135,6 +135,8 @@ services:
       KEYCLOAK_URL: http://host.docker.internal/auth
       SERVICE_NAME: user-service
       SERVICE_PORT: 4001
+      MONGODB_URL: mongodb://mongodb/
+      MONGO_SSL: false
     volumes:
       - "/app/node_modules"
       - "./:/app"
