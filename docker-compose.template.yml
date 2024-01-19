@@ -46,6 +46,8 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_HTTP_RELATIVE_PATH: /auth
       KC_HTTPS_PORT: 443
+      KC_HTTP_ENABLED: true
+      KC_HOSTNAME_STRICT_HTTPS: false 
       PROXY_ADDRESS_FORWARDING: true
       KEYCLOAK_FRONTEND_URL: ${ROOT_URL}/auth/
     restart: unless-stopped
