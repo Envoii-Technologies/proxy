@@ -91,6 +91,7 @@ services:
       KEYCLOAK_ADMIN_USERNAME: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       MAX_RETRIES: 10
+      ROOT_URL: http://host.docker.internal
     volumes:
       - "/app/node_modules"
       - "./:/app"
