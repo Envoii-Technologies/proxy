@@ -146,6 +146,7 @@ services:
       KEYCLOAK_URL: ${ROOT_URL}/auth
       SERVICE_NAME: user-service
       SERVICE_PORT: 4001
+      ROOT_URL: ${ROOT_URL}
       ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${ME_HOSTNAME}:27017/
     volumes:
       - "/app/node_modules"
@@ -168,6 +169,7 @@ services:
       SERVICE_NAME: card-service
       SERVICE_PORT: 4002
       ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${ME_HOSTNAME}:27017/
+      ROOT_URL: ${ROOT_URL}
     volumes:
       - "/app/node_modules"
       - "./:/app"
@@ -189,6 +191,7 @@ services:
       SERVICE_NAME: tag-service
       SERVICE_PORT: 4003
       ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${ME_HOSTNAME}:27017/
+      ROOT_URL: ${ROOT_URL}
     volumes:
       - "/app/node_modules"
       - "./:/app"
@@ -211,6 +214,7 @@ services:
       SERVICE_NAME: media-service
       SERVICE_PORT: 4004
       ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${ME_HOSTNAME}:27017/
+      ROOT_URL: ${ROOT_URL}
     depends_on:
       - auth
       - mongodb
@@ -230,6 +234,7 @@ services:
       SERVICE_NAME: category-service
       SERVICE_PORT: 4005
       ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${ME_HOSTNAME}:27017/
+      ROOT_URL: ${ROOT_URL}
     depends_on:
       - auth
       - mongodb
