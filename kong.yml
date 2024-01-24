@@ -61,6 +61,14 @@ services:
           - /api/tenant/[0-9a-z]+/media
         strip_path: false
 
+  - name: category-service
+    url: http://host.docker.internal:4005
+    routes:
+      - name: category-route
+        paths:
+          - /api/tenant/[0-9a-z]+/categories
+        strip_path: false
+
   - name: docs-service
     url: http://host.docker.internal:3400
     routes:
