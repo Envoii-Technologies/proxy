@@ -23,6 +23,7 @@ runs:
   using: "composite"
   steps:
     - name: Set up SSH Key
+      shell: bash
       run: |
         mkdir -p ~/.ssh
         echo "${{ inputs.ssh-private-key }}" > ~/.ssh/id_rsa
