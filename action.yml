@@ -22,11 +22,11 @@ inputs:
 runs:
   using: "composite"
   steps:
-  - name: Set up SSH Key
-    run: |
-      mkdir -p ~/.ssh
-      echo "${{ inputs.ssh-private-key }}" > ~/.ssh/id_rsa
-      chmod 600 ~/.ssh/id_rsa
+    - name: Set up SSH Key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ inputs.ssh-private-key }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
     - name: Deploy to Server
       shell: bash
       run: |
