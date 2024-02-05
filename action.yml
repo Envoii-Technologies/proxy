@@ -22,15 +22,12 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Set up SSH Key
+    - name: Deploy to Server
       shell: bash
       run: |
         mkdir -p ~/.ssh
         echo "${{ inputs.ssh-private-key }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-    - name: Deploy to Server
-      shell: bash
-      run: |
         ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ inputs.user }}@${{ inputs.server-ip }} << EOF
           cd /home/envoii
           docker compose -f ${{ inputs.docker-compose-file }} --project-directory ./ --env-file ${{ inputs.env-file }} up -d ${{ inputs.container-name }} --force-recreate --pull always
