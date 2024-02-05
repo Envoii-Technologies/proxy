@@ -27,5 +27,5 @@ runs:
       run: |
         ssh -o StrictHostKeyChecking=no -i ${{ inputs.ssh-private-key }} ${{ inputs.user }}@${{ inputs.server-ip }} << EOF
           cd /home/envoii
-          docker compose -f ${{ inputs.docker-compose-file }} --project-directory ./ --env-file ${{ inputs.env-file }} up -d ${{container-name}} --force-recreate --pull always
+          docker compose -f ${{ inputs.docker-compose-file }} --project-directory ./ --env-file ${{ inputs.env-file }} up -d ${{ inputs.container-name }} --force-recreate --pull always
         EOF
