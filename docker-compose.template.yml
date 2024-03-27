@@ -35,7 +35,7 @@ services:
       #      - --hostname-port=443
       #      - --hostname-admin-url=${ROOT_URL}/auth/admin
       - --proxy=edge
-      - --log-level=debug
+      # - --log-level=debug
     environment:
       DB_VENDOR: postgres
       DB_ADDR: postgres
