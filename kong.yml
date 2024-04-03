@@ -5,7 +5,7 @@ plugins:
     config:
       account_email: f.reich@envoii.de
       domains:
-        - staging.envoii.de
+        - app.envoii.de
 services:
   - name: auth-service
     url: http://host.docker.internal:8080

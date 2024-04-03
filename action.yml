@@ -6,7 +6,7 @@ inputs:
     required: true
   server-ip:
     description: "Server IP address"
-    default: "staging.envoii.de"
+    default: "app.envoii.de"
   user:
     description: "SSH Username"
     default: "root"
@@ -18,7 +18,7 @@ inputs:
     default: "./proxy/docker-compose.template.yml"
   env-file:
     description: "Path to the environment file"
-    default: "./.env-stage"
+    default: "./.env-app"
 runs:
   using: "composite"
   steps:
