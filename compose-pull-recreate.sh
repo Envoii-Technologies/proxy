@@ -1,1 +1,1 @@
-docker compose -f ./proxy/docker-compose.template.yml --project-directory ./ --env-file ./.env-stage up -d  docs auth frontend migration tenant user card tag media category --force-recreate --pull always
+docker compose -f ./proxy/docker-compose.template.yml --project-directory ./ --env-file ./.env-stage up -d  docs auth frontend migration tenant user card tag media category kong --force-recreate --pull always

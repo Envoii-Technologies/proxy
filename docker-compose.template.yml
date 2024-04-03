@@ -47,7 +47,7 @@ services:
       KC_HTTP_RELATIVE_PATH: /auth
       KC_HTTPS_PORT: 443
       KC_HTTP_ENABLED: true
-      KC_HOSTNAME_STRICT_HTTPS: false 
+      KC_HOSTNAME_STRICT_HTTPS: false
       PROXY_ADDRESS_FORWARDING: true
       KEYCLOAK_FRONTEND_URL: ${ROOT_URL}/auth/
     restart: unless-stopped
@@ -134,7 +134,7 @@ services:
       - "./:/app"
     depends_on:
       - auth
-      - mongodb
+    #  - mongodb
     networks:
       - local-envoii
 
@@ -159,7 +159,7 @@ services:
       - "./:/app"
     depends_on:
       - auth
-      - mongodb
+    #  - mongodb
     networks:
       - local-envoii
 
@@ -184,7 +184,7 @@ services:
       - "./:/app"
     depends_on:
       - auth
-      - mongodb
+    #  - mongodb
     networks:
       - local-envoii
 
@@ -209,7 +209,7 @@ services:
       - "./:/app"
     depends_on:
       - auth
-      - mongodb
+    #  - mongodb
     networks:
       - local-envoii
 
@@ -237,7 +237,7 @@ services:
       STORAGE_SECRETKEY: ${STORAGE_SECRETKEY}
     depends_on:
       - auth
-      - mongodb
+    #  - mongodb
     networks:
       - local-envoii
 
@@ -260,42 +260,42 @@ services:
       MONGO_SSL: ${MONGO_SSL}
     depends_on:
       - auth
-      - mongodb
+    #  - mongodb
     networks:
       - local-envoii
 
   # MongoDB service
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb-data:/data/db
-    networks:
-      - local-envoii
+  #mongodb:
+  #  image: mongo:latest
+  #  container_name: mongodb
+  #  environment:
+  #    MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+  #    MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+  #  ports:
+  #    - "27017:27017"
+  #  volumes:
+  #    - mongodb-data:/data/db
+  #  networks:
+  #    - local-envoii
 
   # database check
-  mongo-express:
-    container_name: mongo-express
-    image: mongo-express
-    restart: always
-    ports:
-      - 8081:8081
-    environment:
-      ME_CONFIG_MONGODB_URL: ${MONGO_URL}admin?tls=${MONGO_SSL}&authSource=${MONGO_AUTHSOURCE}${MONGO_ADDITIONAL_QUERY_PARAMS}
-      ME_CONFIG_MONGO_DB_SERVER: mongodb
-      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_USER}
-      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASSWORD}
-    networks:
-      - local-envoii
+  #mongo-express:
+  #  container_name: mongo-express
+  #  image: mongo-express
+  #  restart: always
+  #  ports:
+  #    - 8081:8081
+  #  environment:
+  #    ME_CONFIG_MONGODB_URL: ${MONGO_URL}admin?tls=${MONGO_SSL}&authSource=${MONGO_AUTHSOURCE}${MONGO_ADDITIONAL_QUERY_PARAMS}
+  #    ME_CONFIG_MONGO_DB_SERVER: mongodb
+  #    ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_USER}
+  #    ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASSWORD}
+  #  networks:
+  #    - local-envoii
 
 volumes:
   postgres-data:
-  mongodb-data:
+  #mongodb-data:
 
 networks:
   local-envoii:
