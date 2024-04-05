@@ -37,11 +37,16 @@ services:
       - --proxy=edge
       # - --log-level=debug
     environment:
-      DB_VENDOR: postgres
-      DB_ADDR: postgres
-      DB_DATABASE: ${POSTGRES_DB}
-      DB_USER: ${POSTGRES_USER}
-      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      #DB_VENDOR: postgres
+      #DB_ADDR: postgres
+      #DB_DATABASE: ${POSTGRES_DB}
+      #DB_USER: ${POSTGRES_USER}
+      #DB_PASSWORD: ${POSTGRES_PASSWORD}
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres/${POSTGRES_DB}
+      KC_DB_USERNAME: ${POSTGRES_USER}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
+
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
       KC_HTTP_RELATIVE_PATH: /auth
