@@ -2,17 +2,17 @@ version: "3.9"
 
 services:
   # PostgreSQL service
-  postgres:
-    image: postgres:latest
-    container_name: postgres
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    networks:
-      - local-envoii
+  #postgres:
+  #  image: postgres:latest
+  #  container_name: postgres
+  #  environment:
+  #    POSTGRES_DB: ${POSTGRES_DB}
+  #    POSTGRES_USER: ${POSTGRES_USER}
+  #    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #  volumes:
+  #    - postgres-data:/var/lib/postgresql/data
+  #  networks:
+  #    - local-envoii
 
   # documentation service
   docs:
@@ -37,13 +37,8 @@ services:
       - --proxy=edge
       # - --log-level=debug
     environment:
-      #DB_VENDOR: postgres
-      #DB_ADDR: postgres
-      #DB_DATABASE: ${POSTGRES_DB}
-      #DB_USER: ${POSTGRES_USER}
-      #DB_PASSWORD: ${POSTGRES_PASSWORD}
       KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://postgres/${POSTGRES_DB}
+      KC_DB_URL: ${POSTGRES_URL}
       KC_DB_USERNAME: ${POSTGRES_USER}
       KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
 
@@ -56,8 +51,8 @@ services:
       PROXY_ADDRESS_FORWARDING: true
       KEYCLOAK_FRONTEND_URL: ${ROOT_URL}/auth/
     restart: unless-stopped
-    depends_on:
-      - postgres
+    #depends_on:
+    #  - postgres
     ports:
       - "8080:8080"
     networks:
@@ -299,7 +294,7 @@ services:
   #    - local-envoii
 
 volumes:
-  postgres-data:
+  #postgres-data:
   #mongodb-data:
 
 networks:
