@@ -66,6 +66,7 @@ services:
       KONG_DATABASE: "off" # Use 'off' for DB-less mode
       KONG_DECLARATIVE_CONFIG: "/etc/kong/kong.yml"
     volumes:
+      - kong-data:/usr/local/kong #contains the ssl certificates
       - ./proxy/kong.yml:/etc/kong/kong.yml # Mount the kong.yml file
       - ./proxy/kong.conf.default:/etc/kong/kong.conf.default
       - ./proxy/kong.conf:/etc/kong/kong.conf
@@ -293,9 +294,10 @@ services:
   #  networks:
   #    - local-envoii
 
-#volumes:
-#postgres-data:
-#mongodb-data:
+volumes:
+  #postgres-data:
+  #mongodb-data:
+  kong-data:
 
 networks:
   local-envoii:
