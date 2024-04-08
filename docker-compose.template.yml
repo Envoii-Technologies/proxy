@@ -4,7 +4,7 @@ services:
   # documentation service
   docs:
     container_name: docs
-    image: ghcr.io/envoii-technologies/documentation-service:latest-develop
+    image: ghcr.io/envoii-technologies/documentation-service:latest
     ports:
       - "3400:3400"
     networks:
@@ -13,7 +13,7 @@ services:
   # Auth service (Keycloak)
   auth:
     # image: quay.io/keycloak/keycloak:latest
-    image: ghcr.io/envoii-technologies/auth-service:latest-develop
+    image: ghcr.io/envoii-technologies/auth-service:latest
     container_name: auth
     command:
       - start
@@ -79,7 +79,7 @@ services:
   frontend:
     container_name: frontend
     stdin_open: true
-    image: ghcr.io/envoii-technologies/frontend-service:latest-develop
+    image: ghcr.io/envoii-technologies/frontend-service:latest
     ports:
       - 3000:3000
       - 3001:3001
@@ -91,7 +91,7 @@ services:
 
   # tenant service
   tenant:
-    image: ghcr.io/envoii-technologies/tenant-service:latest-develop
+    image: ghcr.io/envoii-technologies/tenant-service:latest
     container_name: tenant
     restart: on-failure
     ports:
@@ -116,7 +116,7 @@ services:
 
   # user service
   user:
-    image: ghcr.io/envoii-technologies/user-service:latest-develop
+    image: ghcr.io/envoii-technologies/user-service:latest
     container_name: user
     restart: on-failure
     ports:
@@ -141,7 +141,7 @@ services:
 
   # card service
   card:
-    image: ghcr.io/envoii-technologies/card-service:latest-develop
+    image: ghcr.io/envoii-technologies/card-service:latest
     container_name: card
     restart: on-failure
     ports:
@@ -166,7 +166,7 @@ services:
 
   # tag service
   tag:
-    image: ghcr.io/envoii-technologies/tag-service:latest-develop
+    image: ghcr.io/envoii-technologies/tag-service:latest
     container_name: tag
     restart: on-failure
     ports:
@@ -189,7 +189,7 @@ services:
     networks:
       - local-envoii
 
-  # media service
+  # media service. Latest from main not working.
   media:
     image: ghcr.io/envoii-technologies/media-service:latest-develop
     container_name: media
@@ -219,7 +219,7 @@ services:
 
   # category service
   category:
-    image: ghcr.io/envoii-technologies/category-service:latest-develop
+    image: ghcr.io/envoii-technologies/category-service:latest
     container_name: category
     restart: on-failure
     ports:
