@@ -6,6 +6,11 @@ plugins:
       account_email: f.reich@envoii.de
       domains:
         - app.envoii.de
+      storage: redis
+      storage_config:
+        redis:
+          host: redis
+          port: 6379
 services:
   - name: auth-service
     url: http://host.docker.internal:8080
