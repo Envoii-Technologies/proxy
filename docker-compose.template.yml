@@ -71,7 +71,6 @@ services:
       KONG_DATABASE: "off" # Use 'off' for DB-less mode
       KONG_DECLARATIVE_CONFIG: "/etc/kong/kong.yml"
     volumes:
-      - kong-data:/usr/local/kong #contains the ssl certificates
       - ./proxy/kong.yml:/etc/kong/kong.yml # Mount the kong.yml file
       - ./proxy/kong.conf.default:/etc/kong/kong.conf.default
       - ./proxy/kong.conf:/etc/kong/kong.conf
@@ -80,6 +79,17 @@ services:
       - "443:8443" # HTTPS traffic
       - "8001:8001" # Admin API (non-SSL)
       - "8444:8444" # Admin API (SSL)
+    networks:
+      - local-envoii
+
+  #to save certificates of kong persistent. See kong.yml
+  redis:
+    image: redis:latest
+    command: redis-server --requirepass Lwn6ZXwAYPKn9GXjKbgm
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
     networks:
       - local-envoii
 
@@ -302,7 +312,7 @@ services:
 volumes:
   postgres-data:
   #mongodb-data:
-  kong-data:
+  redis-data:
 
 networks:
   local-envoii:
