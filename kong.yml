@@ -11,7 +11,8 @@ plugins:
         redis:
           host: redis
           port: 6379
-          auth: Lwn6ZXwAYPKn9GXjKbgm
+          username: kong
+          password: Lwn6ZXwAYPKn9GXjKbgm
 services:
   - name: auth-service
     url: http://host.docker.internal:8080
