@@ -11,6 +11,7 @@ plugins:
         redis:
           host: redis
           port: 6379
+          auth: pUgSjqkEdFJigz3jXWhE
 services:
   - name: auth-service
     url: http://host.docker.internal:8080
