@@ -55,6 +55,7 @@ services:
       KC_HOSTNAME_STRICT_HTTPS: false
       PROXY_ADDRESS_FORWARDING: true
       KEYCLOAK_FRONTEND_URL: ${ROOT_URL}/auth/
+      QUARKUS_TRANSACTION_MANAGER_ENABLE_RECOVERY: true
     restart: unless-stopped
     depends_on:
       - postgres
@@ -62,6 +63,8 @@ services:
       - "8080:8080"
     networks:
       - local-envoii
+    volumes:
+      - object-store:/ObjectStore/
 
   # Backwards proxy
   kong:
@@ -313,6 +316,7 @@ volumes:
   postgres-data:
   #mongodb-data:
   redis-data:
+  object-store:
 
 networks:
   local-envoii:
