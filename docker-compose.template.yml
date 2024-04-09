@@ -194,7 +194,7 @@ services:
 
   # media service. Latest from main not working.
   media:
-    image: ghcr.io/envoii-technologies/media-service:latest-develop
+    image: ghcr.io/envoii-technologies/media-service:latest
     container_name: media
     restart: on-failure
     ports:
