@@ -88,6 +88,7 @@ services:
   #to save certificates of kong persistent. See kong.yml
   redis:
     image: redis:latest
+    container_name: redis
     command: redis-server --requirepass Lwn6ZXwAYPKn9GXjKbgm --user kong
     ports:
       - "6379:6379"
