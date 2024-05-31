@@ -73,12 +73,14 @@ services:
     environment:
       KONG_DATABASE: "off" # Use 'off' for DB-less mode
       KONG_DECLARATIVE_CONFIG: "/etc/kong/kong.yml"
+      KONG_NGINX_HTTP_INCLUDE: "/usr/local/kong/custom-nginx-kong.conf"
     volumes:
       - ./proxy/kong.yml:/etc/kong/kong.yml # Mount the kong.yml file
       - ./proxy/kong.conf.default:/etc/kong/kong.conf.default
       - ./proxy/kong.conf:/etc/kong/kong.conf
+      - ./proxy/custom-nginx-kong.conf:/usr/local/kong/custom-nginx-kong.conf
     ports:
-      #- "80:8000" # HTTP traffic
+      - "80:8000" # HTTP traffic
       - "443:8443" # HTTPS traffic
       - "8001:8001" # Admin API (non-SSL)
       - "8444:8444" # Admin API (SSL)
