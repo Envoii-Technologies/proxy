@@ -78,7 +78,7 @@ services:
       - ./proxy/kong.conf.default:/etc/kong/kong.conf.default
       - ./proxy/kong.conf:/etc/kong/kong.conf
     ports:
-      - "80:8000" # HTTP traffic
+      #- "80:8000" # HTTP traffic
       - "443:8443" # HTTPS traffic
       - "8001:8001" # Admin API (non-SSL)
       - "8444:8444" # Admin API (SSL)
