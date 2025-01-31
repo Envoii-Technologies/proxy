@@ -15,7 +15,7 @@ inputs:
     required: true
   docker-compose-file:
     description: "Path to the Docker Compose file"
-    default: "./proxy/docker-compose.template.yml"
+    default: "./docker-compose.template.yml"
   env-file:
     description: "Path to the environment file"
     default: "./.env-app"
