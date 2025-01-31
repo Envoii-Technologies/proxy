@@ -6,7 +6,7 @@ inputs:
     required: true
   server-ip:
     description: "Server IP address"
-    default: "staging.envoii.de"
+    default: "develop.envoii.de"
   user:
     description: "SSH Username"
     default: "root"
